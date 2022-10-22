@@ -33,7 +33,7 @@ class WeatherActivity : AppCompatActivity() {
         timeinit()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.openweathermap.org/")
+            .baseUrl("https://api.openweathermap.org/data/2.5/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val weatherAPI = retrofit.create(WeatherAPI::class.java)

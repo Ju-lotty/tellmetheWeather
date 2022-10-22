@@ -5,7 +5,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface WeatherAPI {
-    @GET("data/2.5/weather?")
+    @GET("/weather")
     fun getReuslt(
         @Query("q") q: String,
         @Query("appid") appid: String
