@@ -9,7 +9,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.annotation.RequiresApi
+import com.project.tellmetheweather.api.ResultDTO
+import com.project.tellmetheweather.api.WeatherAPI
 import com.project.tellmetheweather.databinding.ActivityWeatherBinding
+import org.json.JSONObject
+import retrofit2.*
+import retrofit2.converter.gson.GsonConverterFactory
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -26,7 +31,29 @@ class WeatherActivity : AppCompatActivity() {
 
         intentinit()
         timeinit()
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://api.openweathermap.org/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val weatherAPI = retrofit.create(WeatherAPI::class.java)
+        val call = weatherAPI.getReuslt("Seoul", "fd9d7c1642ccbdc418961d9dd15c971d")
+        call.enqueue(object: Callback<ResultDTO> {
+            override fun onResponse(call: Call<ResultDTO>, response: Response<ResultDTO>) {
+                val a = response.raw().toString()
+                val b = response.body().toString()
+                Log.d("결과1", "$a")
+                Log.d("결과2", "$b")
+            }
+
+            override fun onFailure(call: Call<ResultDTO>, t: Throwable) {
+                Log.d("결과", "Fail!!!!!")
+            }
+
+        })
+
     }
+
 
     private fun intentinit() = with(binding) {
         gotoActivityButton.setOnClickListener {
@@ -53,4 +80,5 @@ class WeatherActivity : AppCompatActivity() {
             nowTimeTextView.text = "오전 " + hour + ":" + minute
         }
     }
+
 }
