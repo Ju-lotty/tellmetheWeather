@@ -14,3 +14,16 @@ fd9d7c1642ccbdc418961d9dd15c971d
 보통일 때  - 초록 색
 심할 때 - 어두움
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+Forecast
+필요한 것
+아이콘, 시간, 온도
+
+weather [ ]
+icon "01d"
+description "맑음"
+
+dt_txt "2022-10-24 06:00:00"
+
+main { }
+temp

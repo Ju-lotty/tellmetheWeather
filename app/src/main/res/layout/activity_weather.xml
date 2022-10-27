@@ -2,10 +2,21 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/backGround"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#30ACDC"
     tools:context=".WeatherActivity">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/locationImageView"
@@ -18,52 +29,36 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
 
-    <TextView
-        android:id="@+id/areaTextView"
+    <ImageView
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:background="@drawable/ic_arrow"
+        app:layout_constraintBottom_toBottomOf="@id/locationImageView"
+        app:layout_constraintEnd_toEndOf="@id/spinnerLocation"
+        app:layout_constraintStart_toEndOf="@id/locationImageView"
+        app:layout_constraintTop_toTopOf="@id/locationImageView" />
+
+    <Spinner
+        android:id="@+id/spinnerLocation"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:text="경기도"
-        android:textColor="@color/white"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/locationImageView"
-        app:layout_constraintTop_toTopOf="@id/locationImageView"
-        tools:ignore="HardcodedText" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="2dp"
+        android:animationCache="true"
         android:background="#00000000"
-        android:src="@drawable/ic_arrow"
-        app:layout_constraintStart_toEndOf="@id/areaTextView"
-        app:layout_constraintTop_toTopOf="@id/locationImageView"
-        tools:ignore="ContentDescription" />
-
-
-    <ImageButton
-        android:id="@+id/gotoActivityButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/ic_mask"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
+        android:spinnerMode="dialog"
+        app:layout_constraintBottom_toBottomOf="@id/locationImageView"
+        app:layout_constraintStart_toEndOf="@id/locationImageView"
+        app:layout_constraintTop_toTopOf="@id/locationImageView" />
 
     <ImageView
         android:id="@+id/weatherImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:src="@drawable/ic_afternoon"
         app:layout_constraintBottom_toTopOf="@id/temperatureTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/areaTextView"
+        app:layout_constraintTop_toBottomOf="@id/spinnerLocation"
         tools:ignore="ContentDescription" />
 
     <TextView
@@ -128,7 +123,7 @@
         android:id="@+id/maxTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="70dp"
+        android:layout_marginStart="60dp"
         android:layout_marginTop="10dp"
         android:text="Max : "
         android:textColor="@color/white"
@@ -189,7 +184,7 @@
         android:id="@+id/rainImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
+        android:layout_marginStart="15dp"
         android:src="@drawable/ic_rain"
         app:layout_constraintBottom_toBottomOf="@id/view1"
         app:layout_constraintStart_toStartOf="@id/view1"
@@ -244,6 +239,7 @@
         tools:ignore="ContentDescription" />
 
     <TextView
+        android:id="@+id/windspeedTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -259,26 +255,50 @@
         android:id="@+id/view2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginHorizontal="30dp"
+        android:layout_marginHorizontal="10dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/shape1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view1" />
+        app:layout_constraintTop_toBottomOf="@id/view1"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:text="Today"
+        android:text="Forecast"
         android:textColor="@color/white"
         android:textSize="25sp"
         android:textStyle="bold"
-
         app:layout_constraintStart_toStartOf="@id/view2"
-        app:layout_constraintTop_toTopOf="@id/view2" />
+        app:layout_constraintTop_toTopOf="@id/view2"
+        tools:ignore="HardcodedText" />
 
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="@id/view2"
+        app:layout_constraintEnd_toEndOf="@id/view2"
+        app:layout_constraintStart_toStartOf="@id/view2"
+        app:layout_constraintTop_toTopOf="@id/view2">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/forecastRecyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:nestedScrollingEnabled="false"
+            android:orientation="horizontal"
+            android:overScrollMode="never"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="@id/view2"
+            app:layout_constraintStart_toStartOf="@id/view2"
+            app:layout_constraintTop_toTopOf="@id/view2" />
+    </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
