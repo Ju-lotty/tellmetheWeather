@@ -171,17 +171,6 @@ class WeatherActivity : AppCompatActivity() {
             override fun onResponse(call: Call<RealtimeDTO>, response: Response<RealtimeDTO>) {
                 if(response.isSuccessful) {
 
-//                    response.body()?.let { it ->
-//                        it.weather.forEach {
-//                            val icon = it.icon
-//                            val iconUrl = "https://openweathermap.org/img/w/$icon.png"
-//                            Log.d("결과1", icon.toString())
-//                            Log.d("결과2", iconUrl)
-//                            Glide.with(this@WeatherActivity).load(iconUrl).into(weatherImageView)
-//                        }
-//                    }
-
-
                     val now = (String.format("%.1f", response.body()!!.main.temp!! - 273))
                     val max = (String.format("%.1f",response.body()!!.main.temp_max!! - 273)) + "°C"
                     val min = (String.format("%.1f",response.body()!!.main.temp_min!! - 273)) + "°C"
@@ -243,7 +232,7 @@ class WeatherActivity : AppCompatActivity() {
             nowTimeTextView.text = "오전 " + hour + ":" + minute
         }
 
-        if(18 < hour.toInt() || 0 == hour.toInt() || hour.toInt() <= 6) {
+        if(18 <= hour.toInt() || 0 == hour.toInt() || hour.toInt() <= 6) {
             backGround.setBackgroundResource(R.drawable.nightbackground)
             view1.setBackgroundResource(R.drawable.shape2)
             view2.setBackgroundResource(R.drawable.shape2)
